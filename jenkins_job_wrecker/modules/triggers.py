@@ -49,8 +49,13 @@ def reversebuildtrigger(top, parent):
 
 
 def gerrittrigger(top, parent):
-    pass
-
+    # raise NotImplementedError('cannot handle gerrit-trigger '
+    #                           'setting %s' % top)
+    gerrit = {}
+    for child in top:
+        if child.tag == 'triggerOnEvents'.lower():
+            child.text
+            gerrit['trigger-on'].append()
 
 def githubpushtrigger(top, parent):
     parent.append('github')

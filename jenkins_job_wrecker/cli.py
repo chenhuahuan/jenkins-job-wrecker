@@ -44,6 +44,20 @@ if PY2:
     yaml.add_representer(unicode, str_presenter)
 
 
+from ruamel.yaml import YAML
+from ruamel.yaml.compat import StringIO
+class MyYAML(YAML):
+    def dump(self, data, stream=None, **kw):
+        inefficient = False
+        if stream is None:
+            inefficient = True
+            stream = StringIO()
+        YAML.dump(self, data, stream, **kw)
+        if inefficient:
+            return stream.getvalue()
+
+my_yaml = MyYAML()   # or typ='safe'/'unsafe' etc
+
 
 # Given a file with XML, or a string of XML, parse it with
 # xml.etree.ElementTree and return the XML tree root.
@@ -101,10 +115,11 @@ def root_to_yaml(root, name, ignore_actions=False):
             job['project-type'] = 'maven'
 
         raw = {}
-        raw['xml'] = ET.tostring(root)
+        raw['xml'] = ET.tostring(root, encoding='unicode')
         job['xml'] = {'raw': raw}
 
     return yaml.dump(build, default_flow_style=False, default_style=None)
+    # return my_yaml.dump(build)
 
 
 # argparse foo
@@ -297,3 +312,7 @@ def main():
 
         convert_to_yml(job_names, 'job')
         convert_to_yml(view_names, 'view', output_dir='output/views')
+
+
+if __name__ == "__main__":
+    sys.exit(main())

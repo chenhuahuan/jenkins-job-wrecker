@@ -33,6 +33,14 @@ You will now have a ``jjwrecker`` utility in your ``$PATH``.
 
 Usage
 -----
+
+
+Example:
+
+export JJW_USERNAME=xxx
+export JJW_password=xxx
+./cli.py -f ../config.xml -n configBuild
+
 Let's say you have an XML definition file for "my-job". You'll typically find
 these .xml files on your Jenkins master, maybe in ``/var/lib/jenkins/jobs/``.
 Here's how you convert that job file to YAML::
@@ -84,5 +92,12 @@ HTTPS connections based on this openssl-hashed directory of certificates.
 License
 -------
 MIT (see ``LICENSE``)
+
+
+
+
+
+
+
 
 Copyright (c) 2015 Red Hat, Inc.
